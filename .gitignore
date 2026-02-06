@@ -1,0 +1,8 @@
+*.zip
+dist/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+node_modules/

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Snap</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      width: 360px;
+      max-height: 500px;
+      background: #1a1a2e;
+      color: #eee;
+    }
+
+    .container {
+      padding: 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-icon {
+      font-size: 24px;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #aaa;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
+    .save-section {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #667eea;
+    }
+
+    input[type="text"]::placeholder {
+      color: #666;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .current-tabs {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .sessions-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .sessions-header h2 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sessions-list {
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .session-item {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+
+    .session-item:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .session-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .session-name {
+      font-weight: 500;
+      font-size: 14px;
+      word-break: break-word;
+      flex: 1;
+      margin-right: 8px;
+    }
+
+    .session-meta {
+      font-size: 11px;
+      color: #666;
+      display: flex;
+      gap: 12px;
+    }
+
+    .session-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .btn-small {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #ccc;
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-small:hover {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
+    .btn-small.restore {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-small.delete {
+      color: #ff6b6b;
+    }
+
+    .btn-small.delete:hover {
+      background: rgba(255, 107, 107, 0.2);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
+
+    .empty-state-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .shortcut-hint {
+      font-size: 10px;
+      color: #555;
+      text-align: center;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    kbd {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+
+    /* Scrollbar styling */
+    .sessions-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sessions-list::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 3px;
+    }
+
+    .sessions-list::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.2);
+      border-radius: 3px;
+    }
+
+    /* Hidden file input */
+    #importInput {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="logo-icon">📸</span>
+        <h1>Session Snap</h1>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="exportBtn" title="Export sessions">📤</button>
+        <button class="icon-btn" id="importBtn" title="Import sessions">📥</button>
+      </div>
+    </header>
+
+    <div class="save-section">
+      <input type="text" id="sessionName" placeholder="Session name (optional)">
+      <button class="btn-primary" id="saveBtn">Save</button>
+    </div>
+
+    <div class="current-tabs" id="tabCount">Loading...</div>
+
+    <div class="sessions-header">
+      <h2>Saved Sessions</h2>
+    </div>
+
+    <div class="sessions-list" id="sessionsList">
+      <!-- Sessions will be rendered here -->
+    </div>
+
+    <div class="shortcut-hint">
+      Quick save: <kbd>Alt+Shift+S</kbd>
+    </div>
+
+    <input type="file" id="importInput" accept=".json">
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
