@@ -11,15 +11,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     sessionsList: document.getElementById('sessionsList'),
     exportBtn: document.getElementById('exportBtn'),
     importBtn: document.getElementById('importBtn'),
-    importInput: document.getElementById('importInput')
+    importInput: document.getElementById('importInput'),
+    searchInput: document.getElementById('searchInput')
   };
+
+  let allSessions = [];
 
   // Show current tab count
   const tabs = await chrome.tabs.query({ currentWindow: true });
   elements.tabCount.textContent = `📑 ${tabs.length} tabs in current window`;
 
   // Load and render sessions
-  await renderSessions();
+  await loadSessions();
+
+  // Search functionality
+  elements.searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const filtered = allSessions.filter(s => 
+      s.name.toLowerCase().includes(query) ||
+      s.tabs.some(t => t.title?.toLowerCase().includes(query) || t.url?.toLowerCase().includes(query))
+    );
+    renderSessions(filtered);
+  });
+
+  async function loadSessions() {
+    allSessions = await chrome.runtime.sendMessage({ action: 'getSessions' }) || [];
+    renderSessions(allSessions);
+  }
 
   // Save button click
   elements.saveBtn.addEventListener('click', async () => {
@@ -29,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       name: name || `Session - ${new Date().toLocaleDateString()}`
     });
     elements.sessionName.value = '';
-    await renderSessions();
+    await loadSessions();
     showToast('Session saved! ✓');
   });
 
@@ -71,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       await chrome.runtime.sendMessage({ action: 'importSessions', sessions });
-      await renderSessions();
+      await loadSessions();
       showToast('Sessions imported! 📥');
     } catch (err) {
       showToast('Invalid file format ❌');
@@ -80,9 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     elements.importInput.value = '';
   });
 
-  async function renderSessions() {
-    const sessions = await chrome.runtime.sendMessage({ action: 'getSessions' });
-    
+  function renderSessions(sessions) {
     if (!sessions || sessions.length === 0) {
       elements.sessionsList.innerHTML = `
         <div class="empty-state">
@@ -131,14 +147,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const newName = prompt('Enter new name:', currentName);
         if (newName && newName.trim()) {
           await chrome.runtime.sendMessage({ action: 'renameSession', sessionId, name: newName.trim() });
-          await renderSessions();
+          await loadSessions();
         }
       });
       
       item.querySelector('[data-action="delete"]').addEventListener('click', async () => {
         if (confirm('Delete this session?')) {
           await chrome.runtime.sendMessage({ action: 'deleteSession', sessionId });
-          await renderSessions();
+          await loadSessions();
           showToast('Session deleted');
         }
       });

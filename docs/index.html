@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Snap - Save & Restore Your Browser Tabs</title>
+  <meta name="description" content="Save, organize, and restore your browser tabs. Never lose your work again! One-click session saving with instant restore.">
+  <meta property="og:title" content="Session Snap">
+  <meta property="og:description" content="Save, organize, and restore your browser tabs. Never lose your work again!">
+  <meta property="og:image" content="https://raw.githubusercontent.com/JakeLiuMe/SessionSnap/main/icons/icon128.png">
+  <link rel="icon" href="https://raw.githubusercontent.com/JakeLiuMe/SessionSnap/main/icons/icon32.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      min-height: 100vh;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    header { text-align: center; padding: 60px 0; }
+    .logo { font-size: 80px; margin-bottom: 20px; }
+    h1 { 
+      font-size: 48px; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    .tagline { font-size: 20px; color: #a0aec0; margin-bottom: 30px; }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+    .feature {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .feature-icon { font-size: 40px; margin-bottom: 15px; }
+    .feature h3 { font-size: 20px; margin-bottom: 10px; }
+    .feature p { color: #a0aec0; line-height: 1.6; }
+    .use-cases {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 40px;
+      margin: 40px 0;
+    }
+    .use-cases h2 { margin-bottom: 20px; text-align: center; }
+    .use-cases ul { list-style: none; }
+    .use-cases li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .use-cases li:last-child { border: none; }
+    .use-cases li::before { content: "✓ "; color: #4ade80; }
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: #666;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    footer a { color: #667eea; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">📸</div>
+      <h1>Session Snap</h1>
+      <p class="tagline">Save, organize, and restore your browser tabs.<br>Never lose your work again!</p>
+      <a href="https://github.com/JakeLiuMe/SessionSnap" class="cta-btn">Get It Free →</a>
+    </header>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">💾</div>
+        <h3>One-Click Save</h3>
+        <p>Save all your tabs instantly. Name your sessions for easy organization.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Restore</h3>
+        <p>Restore any session in your current window or a new window. Your choice.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📤</div>
+        <h3>Export & Import</h3>
+        <p>Backup your sessions to JSON. Move them between computers.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <h3>Privacy First</h3>
+        <p>All data stored locally. No cloud, no account, no tracking.</p>
+      </div>
+    </div>
+
+    <div class="use-cases">
+      <h2>Perfect For</h2>
+      <ul>
+        <li>Saving your "Work" and "Personal" browser contexts</li>
+        <li>Research projects with dozens of reference tabs</li>
+        <li>Recovering from browser crashes</li>
+        <li>Sharing tab collections with teammates</li>
+        <li>Finally closing those 50 tabs without losing them</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>Made with ❤️ by <a href="https://github.com/JakeLiuMe">Jake Liu</a></p>
+      <p style="margin-top: 10px;"><a href="https://github.com/JakeLiuMe/SessionSnap">GitHub</a> • MIT License</p>
+    </footer>
+  </div>
+</body>
+</html>

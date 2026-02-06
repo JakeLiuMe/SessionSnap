@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Session Snap",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Save, organize, and restore your browser tabs. Never lose your work again! One-click session saving with instant restore.",
   "author": "Jake Liu",
   "homepage_url": "https://github.com/JakeLiuMe/SessionSnap",
